@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo
+echo 'This command used to help you configure aws-vault, but that is no longer supported.'
+echo 'We recommend you store, manage, and activate your AWS credentials with Leapp.'
+echo 'Leapp is free and open source. Get it from https://leapp.cloud'
+echo
+

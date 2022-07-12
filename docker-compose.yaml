@@ -1,0 +1,23 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  geodesic:
+    container_name: lunarops-workspace
+    # build: .
+    image: lunarops/geodesic:latest
+    privileged: true
+    ports:
+      - "37049:37049"
+    volumes:
+      - "${HOME}:/localhost"
+    environment:
+      - LS_COLORS
+      - TERM
+      - TERM_COLOR
+      - TERM_PROGRAM
+      - LOCAL_HOME=$HOME
+      - GEODESIC_PORT=37049
+      - GEODESIC_HOST_CWD=$PWD
+      - DOCKER_IMAGE=lunarops/geodesic
+      - DOCKER_NAME=lunarops-workspace
+      - DOCKER_TAG=latest
+

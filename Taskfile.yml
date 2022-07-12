@@ -1,0 +1,26 @@
+version: '3'
+
+# includes:
+#   docker: ./DockerTasks.yml
+#   docs:
+#     taskfile: ./docs/Taskfile.yml
+#     dir: ./docs
+
+env: # global scope
+
+dotenv: ['.env']
+
+tasks:
+  default:
+    cmds:
+      - task -l
+
+  geodesic:build:
+    desc: Build Geodesic container image
+    cmds:
+      - nerdctl build -t lunarops/geodesic .
+
+  geodesic:run:
+    desc: Run Geodesic container image
+    cmds:
+      - nerdctl compose up -d

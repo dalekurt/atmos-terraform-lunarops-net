@@ -1,0 +1,117 @@
+components:
+  terraform:
+    account:
+      backend:
+        s3:
+          role_arn: null
+      vars:
+        enabled: true
+        account_email_format: aws+lonet-%s@lunarops.net
+        account_iam_user_access_to_billing: DENY
+        organization_enabled: true
+        aws_service_access_principals:
+          - cloudtrail.amazonaws.com
+          - guardduty.amazonaws.com
+          - ipam.amazonaws.com
+          - ram.amazonaws.com
+          - securityhub.amazonaws.com
+          - servicequotas.amazonaws.com
+          - sso.amazonaws.com
+          - securityhub.amazonaws.com
+          - auditmanager.amazonaws.com
+        enabled_policy_types:
+          - SERVICE_CONTROL_POLICY
+          - TAG_POLICY
+        organization_config:
+          root_account:
+            name: coreroot
+            stage: root
+            tags:
+              eks: false
+          accounts: []
+          organization:
+            service_control_policies:
+              - DenyNonNitroInstances
+          organizational_units:
+            - name: core
+              accounts:
+                - name: coreartifacts
+                  tenant: core
+                  stage: artifacts
+                  tags:
+                    eks: false
+                - name: coreaudit
+                  tenant: core
+                  stage: audit
+                  tags:
+                    eks: false
+                - name: coreauto
+                  tenant: core
+                  stage: auto
+                  tags:
+                    eks: true
+                - name: corecorp
+                  tenant: core
+                  stage: corp
+                  tags:
+                    eks: true
+                - name: coredns
+                  tenant: core
+                  stage: dns
+                  tags:
+                    eks: false
+                - name: coreidentity
+                  tenant: core
+                  stage: identity
+                  tags:
+                    eks: false
+                - name: corenetwork
+                  tenant: core
+                  stage: network
+                  tags:
+                    eks: false
+                - name: coresecurity
+                  tenant: core
+                  stage: security
+                  tags:
+                    eks: false
+              service_control_policies:
+                - DenyLeavingOrganization
+            - name: plat
+              accounts:
+                - name: platdemo
+                  tenant: plat
+                  stage: demo
+                  tags:
+                    eks: true
+                - name: platdev
+                  tenant: plat
+                  stage: dev
+                  tags:
+                    eks: true
+                - name: plattesting
+                  tenant: plat
+                  stage: testing
+                  tags:
+                    eks: true
+                - name: platstaging
+                  tenant: plat
+                  stage: staging
+                  tags:
+                    eks: true
+                - name: platprod
+                  tenant: plat
+                  stage: prod
+                  tags:
+                    eks: true
+              service_control_policies:
+                - DenyLeavingOrganization
+        service_control_policies_config_paths:
+          - "https://raw.githubusercontent.com/cloudposse/terraform-aws-service-control-policies/0.9.2/catalog/cloudwatch-logs-policies.yaml"
+          - "https://raw.githubusercontent.com/cloudposse/terraform-aws-service-control-policies/0.9.2/catalog/deny-all-policies.yaml"
+          - "https://raw.githubusercontent.com/cloudposse/terraform-aws-service-control-policies/0.9.2/catalog/iam-policies.yaml"
+          - "https://raw.githubusercontent.com/cloudposse/terraform-aws-service-control-policies/0.9.2/catalog/kms-policies.yaml"
+          - "https://raw.githubusercontent.com/cloudposse/terraform-aws-service-control-policies/0.9.2/catalog/organization-policies.yaml"
+          - "https://raw.githubusercontent.com/cloudposse/terraform-aws-service-control-policies/0.9.2/catalog/route53-policies.yaml"
+          - "https://raw.githubusercontent.com/cloudposse/terraform-aws-service-control-policies/0.9.2/catalog/s3-policies.yaml"
+          - "https://raw.githubusercontent.com/cloudposse/terraform-aws-service-control-policies/0.9.2/catalog/ec2-policies.yaml"
